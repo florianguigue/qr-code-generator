@@ -2,7 +2,6 @@ package com.flow.qrcodegenerator;
 
 import com.flow.qrcodegenerator.enums.ErrorCorrectionLevel;
 import com.flow.qrcodegenerator.enums.Mode;
-import com.flow.qrcodegenerator.enums.Version;
 
 /**
  * Representation of the com.flow.qrcodegenerator.QrCode and its information.
@@ -17,4 +16,16 @@ public record QrCode(byte[] content,
 
                      ErrorCorrectionLevel errorCorrectionLevel,
 
-                     Version version) { }
+                     int version) {
+    public QrCode(byte[] content, Mode mode, ErrorCorrectionLevel errorCorrectionLevel, int version) {
+        this.content = content;
+        this.mode = mode;
+        this.errorCorrectionLevel = errorCorrectionLevel;
+
+        if (version < 1 || version > 40) {
+            throw new IllegalArgumentException("Accepted versions: 1 to 40. Version received: %d".formatted(version));
+        }
+
+        this.version = version;
+    }
+}

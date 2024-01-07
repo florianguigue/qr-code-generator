@@ -2,7 +2,6 @@ package com.flow.qrcodegenerator;
 
 import com.flow.qrcodegenerator.enums.ErrorCorrectionLevel;
 import com.flow.qrcodegenerator.enums.Mode;
-import com.flow.qrcodegenerator.enums.Version;
 
 public class QrCodeGenerator {
 
@@ -24,8 +23,7 @@ public class QrCodeGenerator {
      */
     public QrCode generateQrCodeFromString(String stringToEncode, ErrorCorrectionLevel errorCorrectionLevel) {
         Mode mode = QrCodeUtils.determineMode(stringToEncode);
-        Version version = QrCodeUtils.determineMinimumVersion(stringToEncode, mode, errorCorrectionLevel);
 
-        return new QrCode(null, mode, errorCorrectionLevel, version);
+        return new QrCode(null, mode, errorCorrectionLevel, 1);
     }
 }
