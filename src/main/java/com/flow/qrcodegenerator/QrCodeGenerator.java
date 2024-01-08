@@ -23,7 +23,8 @@ public class QrCodeGenerator {
      */
     public QrCode generateQrCodeFromString(String stringToEncode, ErrorCorrectionLevel errorCorrectionLevel) {
         Mode mode = QrCodeUtils.determineMode(stringToEncode);
+        int version = QrCodeUtils.determineVersion(stringToEncode.length(), mode, errorCorrectionLevel);
 
-        return new QrCode(null, mode, errorCorrectionLevel, 1);
+        return new QrCode(null, mode, errorCorrectionLevel, version);
     }
 }
