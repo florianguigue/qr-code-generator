@@ -53,4 +53,9 @@ public abstract class QrCodeUtils {
                 .build()
                 .parse();
     }
+
+    private String getCharacterCountIndicator(int characterCount, Mode mode, int version) {
+        // TODO Pad to the left depending on mode and version (http://tinyurl.com/mr247nmr)
+        return Integer.toBinaryString(characterCount);
+    }
 }

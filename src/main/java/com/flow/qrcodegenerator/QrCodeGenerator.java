@@ -3,6 +3,8 @@ package com.flow.qrcodegenerator;
 import com.flow.qrcodegenerator.enums.ErrorCorrectionLevel;
 import com.flow.qrcodegenerator.enums.Mode;
 
+import java.nio.charset.StandardCharsets;
+
 public class QrCodeGenerator {
 
     /**
@@ -25,6 +27,9 @@ public class QrCodeGenerator {
         Mode mode = QrCodeUtils.determineMode(stringToEncode);
         int version = QrCodeUtils.determineVersion(stringToEncode.length(), mode, errorCorrectionLevel);
 
-        return new QrCode(null, mode, errorCorrectionLevel, version);
+        String encodedData = mode.getModeByteEncoding();
+        encodedData += Integer.toBinaryString(stringToEncode.length());
+
+        return new QrCode(encodedData.getBytes(StandardCharsets.UTF_8), mode, errorCorrectionLevel, version);
     }
 }
