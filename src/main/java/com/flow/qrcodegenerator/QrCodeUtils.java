@@ -24,16 +24,14 @@ public abstract class QrCodeUtils {
         return Mode.BYTE;
     }
 
-    public static int determineVersion(String textToEncode, Mode mode) {
-        int textLength = textToEncode.length();
-
-        var characterCapacitiesByVersion = getCharacterCapacitiesList(ErrorCorrectionLevel.L);
+    public static int determineVersion(int textLength, Mode mode, ErrorCorrectionLevel errorCorrectionLevel) {
+        var characterCapacitiesByVersion = getCharacterCapacitiesList(errorCorrectionLevel);
 
         return characterCapacitiesByVersion.stream().filter(characterCapacities -> switch (mode) {
-            case NUMERIC -> characterCapacities.numericMode() > textLength;
-            case ALPHANUMERIC -> characterCapacities.alphanumericMode() > textLength;
-            case BYTE -> characterCapacities.byteMode() > textLength;
-            case KANJI -> characterCapacities.kanjiMode() > textLength;
+            case NUMERIC -> characterCapacities.numericMode() >= textLength;
+            case ALPHANUMERIC -> characterCapacities.alphanumericMode() >= textLength;
+            case BYTE -> characterCapacities.byteMode() >= textLength;
+            case KANJI -> characterCapacities.kanjiMode() >= textLength;
         }).min((o1, o2) -> switch (mode) {
             case NUMERIC -> o1.numericMode() - o2.numericMode();
             case ALPHANUMERIC -> o1.alphanumericMode() - o2.alphanumericMode();
